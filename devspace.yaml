@@ -1,0 +1,44 @@
+version: v1beta11
+
+vars:
+- name: IMAGE
+  value: gateway
+
+deployments:
+- name: playground
+  kubectl:
+    manifests:
+    - kubernetes/**
+
+images:
+  first-service:
+    image: first-service
+    dockerfile: services/first_service/Dockerfile
+    context: services/first_service/
+  gateway:
+    image: gateway
+    dockerfile: services/gateway/Dockerfile
+    context: services/gateway/
+  second-service:
+    image: second-service
+    dockerfile: services/second-service/Dockerfile
+    context: services/second-service/
+
+dev:
+  ports:
+  - imageSelector: ${IMAGE}
+    forward:
+    - port: 8080
+      remotePort: 3000
+  open:
+  - url: http://localhost:8080
+  sync:
+  - imageSelector: ${IMAGE}
+    localSubPath: services/gateway/
+    containerPath: /app
+    excludePaths:
+    - .git/
+  terminal:
+    imageSelector: ${IMAGE}
+    command:
+    - /app/devspace_start.sh

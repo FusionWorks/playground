@@ -7,7 +7,7 @@ export class AppService {
   @Client({
     transport: Transport.NATS,
     options: {
-      url: 'nats://localhost:4222',
+      url: 'nats://nats:4222',
     },
   })
   client: ClientProxy;
