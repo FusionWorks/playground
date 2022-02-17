@@ -1,6 +1,10 @@
 {
   "dependencies": {
     "@nestjs/microservices": "^8.3.0"
-  }
+  },
+  "workspaces": [
+    "services/first_service",
+    "services/second_service",
+    "services/gateway"
+  ]
 }
-1

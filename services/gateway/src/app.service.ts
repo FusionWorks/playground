@@ -1,18 +1,15 @@
-import { Injectable } from '@nestjs/common';
-import { Client, Transport, ClientProxy } from '@nestjs/microservices';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class AppService {
-  @Client({
-    transport: Transport.NATS,
-    options: {
-      url: 'nats://nats:4222',
-    },
-  })
-  client: ClientProxy;
+  constructor(
+    @Inject('NATS_CLIENT')
+    private natsClient: ClientProxy,
+  ) {}
 
   getHello(): Observable<string> {
-    return this.client.send('hello', {});
+    return this.natsClient.send('hello', {});
   }
 }
