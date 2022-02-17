@@ -25,6 +25,19 @@ images:
     context: services/second-service/
 
 dev:
+  replacePods:
+    - imageSelector: ${IMAGE}
+      replaceImage: node:latest
+      patches:
+        - op: replace
+          path: spec.containers[0].command
+          value: ["sleep"]
+        - op: replace
+          path: spec.containers[0].args
+          value: ["9999999999"]
+        - op: replace
+          path: spec.containers[0].workingDir
+          value: "/app"
   ports:
   - imageSelector: ${IMAGE}
     forward:
@@ -40,5 +53,3 @@ dev:
     - .git/
   terminal:
     imageSelector: ${IMAGE}
-    command:
-    - /app/devspace_start.sh
