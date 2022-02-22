@@ -4,10 +4,26 @@
 
 This project is using Minikube and DevSpace as a matter of local development for Kubernetes, to spin up the infrastructure please follow these steps:
 
+- Install Docker
 - Install kubectl cli
 - Install Minikube cluster
 - Install DevSpace
 - Spin up the development environment
+
+## Install Docker
+### Windows
+- Download this [installer](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&utm_medium=webreferral&utm_campaign=dd-smartbutton&utm_location=header) and follow the steps
+
+### macOS
+- For Intel download this [installer](https://desktop.docker.com/mac/main/amd64/Docker.dmg)
+- For Apple Silicon download this [installer](https://desktop.docker.com/mac/main/arm64/Docker.dmg)
+
+### Linux
+- Install snap repo for your distro
+- Install docker with snap
+```bash
+sudo snapd install docker
+```
 
 ## Install kubectl cli
 ### Windows
@@ -22,11 +38,11 @@ to do so press **Win+R** and type _**sysdm.cpl**_ then open envrionment variable
 
 ### macOS
 1. Download the latest release:
-For Intel:
+- For Intel:
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
 ```
-For Apple Silicon:
+- For Apple Silicon:
 ```bash
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/arm64/kubectl"
 ```
