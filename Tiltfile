@@ -3,21 +3,24 @@ docker_build(
     ref='first-service', 
     context='services/first-service', 
     dockerfile='services/first-service/Dockerfile', 
-    live_update=[sync('services/first-service', '/app')]
+    live_update=[sync('services/first-service', '/app')],
+    entrypoint=['npm', 'run', 'start:debug']
 )
 
 docker_build(
     ref='gateway', 
     context='services/gateway', 
     dockerfile='services/gateway/Dockerfile', 
-    live_update=[sync('services/gateway', '/app')]
+    live_update=[sync('services/gateway', '/app')],
+    entrypoint=['npm', 'run', 'start:debug']
 )
 
 docker_build(
     ref='second-service', 
     context='services/second-service', 
     dockerfile='services/second-service/Dockerfile', 
-    live_update=[sync('services/second-service', '/app')]
+    live_update=[sync('services/second-service', '/app')],
+    entrypoint=['npm', 'run', 'start:debug']
 )
 
 # Deploy K8s manifests
