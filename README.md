@@ -4,11 +4,11 @@
 
 This project is using Minikube and Tilt as a matter of local development for Kubernetes, to spin up the infrastructure please follow these steps:
 
-- Install Docker
-- Install kubectl cli
-- Install Minikube cluster
-- Install Tilt
-- Spin up the development environment
+- Install [Docker](#install-docker)
+- Install [kubectl](#install-kubectl-cli) cli
+- Install [Minikube](#install-minikube-cluster) cluster
+- Install [Tilt](#install-tilt)
+- Spin up the development [environment](#spin-up-the-local-setup)
 
 ## Install Docker
 ### Windows
