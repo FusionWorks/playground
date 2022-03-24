@@ -1,6 +1,6 @@
 # NestJS + NATS + Minikube + DevSpace Playground
 
-<img src="https://d33wubrfki0l68.cloudfront.net/e937e774cbbe23635999615ad5d7732decad182a/26072/logo-small.ede75a6b.svg" alt="NestJS" height="64"> <img src="https://nats.io/img/logos/nats-icon-white.png" alt="NATS" height="64">  <img src="https://raw.githubusercontent.com/kubernetes/minikube/master/images/logo/logo.png" alt="Minikube" height="64">  <img src="https://devspace.sh/cli/img/logo-devspace.svg" alt="DevSpace" height="64"> 
+<img src="https://d33wubrfki0l68.cloudfront.net/e937e774cbbe23635999615ad5d7732decad182a/26072/logo-small.ede75a6b.svg" alt="NestJS" height="64"> <img src="https://nats.io/img/logos/nats-icon-white.png" alt="NATS" height="64">  <img src="https://raw.githubusercontent.com/kubernetes/minikube/master/images/logo/logo.png" alt="Minikube" height="64">  <img src="https://docs.tilt.dev/favicon.ico" alt="Tilt" height="64"> 
 
 This project is using Minikube and DevSpace as a matter of local development for Kubernetes, to spin up the infrastructure please follow these steps:
 
