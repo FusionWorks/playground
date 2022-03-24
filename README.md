@@ -32,7 +32,7 @@ sudo snapd install docker
 3. Add the directory created in previous step to the `PATH` environment variable,
 to do so press **Win+R** and type _**sysdm.cpl**_ then open envrionment variables
 4. Test to ensure the version you installed is up-to-date:
- ```bash
+ ```powershell
  kubectl version --client
  ```
 
@@ -79,7 +79,7 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 1. Download the [latest release](https://storage.googleapis.com/minikube/releases/latest/minikube-installer.exe)
 2. Install the Minikube following installer steps
 3. Start your cluster 
-```bash
+```powershell
 minikube start
 ```
 
@@ -105,22 +105,20 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 minikube start
 ```
 
-## Install DevSpace
-DevSpace is a NPM module and could be installed with this command:
-```bash
-npm install -g devspace
+## Install Tilt
+
+### Windows
+```powershell
+iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.ps1'))
 ```
 
-## Spin up the development environment
-Now that we have everything needed in place we can go to `services/gateway` directory
-and run:
+### macOS/Linux
 ```bash
-devspace use context
-devspace use namespace my-namespace
-devspace dev
+curl -fsSL https://raw.githubusercontent.com/tilt-dev/tilt/master/scripts/install.sh | bash
 ```
-This should build the dockerfiles for the microservices and deploy them to your minikube cluster, at the end you'll be given a shell connection to the gateway pod where you can run the app:
-```bash
-npm run start:dev
+
+## Spin up the local setup
+Run this command from root dir of the project
 ```
-Your application would be accessible on [http://localhost:8080](http://localhost:8080)
+tilt up
+```

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: first-service-deployment
+  name: first-service
   labels:
     app: first-service
 spec:

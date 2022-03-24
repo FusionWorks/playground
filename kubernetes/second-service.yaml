@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: second-service-deployment
+  name: second-service
   labels:
     app: second-service
 spec:
