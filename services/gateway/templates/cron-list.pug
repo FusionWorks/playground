@@ -1,0 +1,8 @@
+html
+    include _head
+    body
+        p You are connected to API ##{ instanceId }
+        each job in jobs
+            div
+                p #{ job.time }
+                p Last execution #{ job.lastExecution }

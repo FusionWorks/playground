@@ -1,0 +1,8 @@
+html
+    include _head
+    body
+        p You are connected to API ##{ instanceId }
+        ul
+            each route in routes
+                li
+                    a(href=route.path) #{ route.name }

@@ -1,0 +1,14 @@
+head
+    title Playground - #{ pageTitle }
+    script(
+        src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+        integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+        crossorigin="anonymous"
+    )
+    script.
+        const socketManager = new io.Manager(`${window.location.origin}:${window.location.port}`);
+        const socket = socketManager.socket('/');
+
+        socket.onAny((...data) => {
+          console.log(data);
+        });

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cron-service
+  labels:
+    app: cron-service
+spec:
+  selector:
+    matchLabels:
+      app: cron-service
+  template:
+    metadata:
+      labels:
+        app: cron-service
+    spec:
+      containers:
+      - name: cron-service
+        image: cron-service:latest
