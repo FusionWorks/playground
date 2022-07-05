@@ -33,13 +33,22 @@ docker_build(
     entrypoint=['npm', 'run', 'start:debug']
 )
 
+docker_build(
+    ref='auth-service',
+    context='services/auth-service',
+    dockerfile='services/auth-service/Dockerfile',
+    live_update=[sync('services/auth-service', '/app')],
+    entrypoint=['npm', 'run', 'start:debug']
+)
+
 # Deploy K8s manifests
 k8s_yaml([
     'kubernetes/first-service.yaml',
     'kubernetes/gateway.yaml',
     'kubernetes/nats.yaml',
     'kubernetes/second-service.yaml',
-    'kubernetes/cron-service.yaml'
+    'kubernetes/cron-service.yaml',
+    'kubernetes/auth-service.yaml'
 ])
 
 # Config K8s resources
@@ -47,4 +56,5 @@ k8s_resource('first-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('gateway', port_forwards=3000, labels=['backend'], resource_deps=['nats'])
 k8s_resource('second-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('cron-service', labels=['backend'], resource_deps=['nats'])
+k8s_resource('auth-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('nats', labels=['services'])
