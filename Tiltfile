@@ -41,6 +41,12 @@ docker_build(
     entrypoint=['npm', 'run', 'start:debug']
 )
 
+docker_build(
+    ref='python-service',
+    context='services/python-service',
+    dockerfile='services/python-service/Dockerfile',
+)
+
 # Deploy K8s manifests
 k8s_yaml([
     'kubernetes/first-service.yaml',
@@ -48,7 +54,8 @@ k8s_yaml([
     'kubernetes/nats.yaml',
     'kubernetes/second-service.yaml',
     'kubernetes/cron-service.yaml',
-    'kubernetes/auth-service.yaml'
+    'kubernetes/auth-service.yaml',
+    'kubernetes/python-service.yaml'
 ])
 
 # Config K8s resources
@@ -58,3 +65,4 @@ k8s_resource('second-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('cron-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('auth-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('nats', labels=['services'])
+k8s_resource('python-service', port_forwards=8000, labels=['services'])
