@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './post.schema';
-import PostDto from './dto/post.dto';
+import PostDto from './dto/create-posts.dto';
 
 @Injectable()
 class PostsService {

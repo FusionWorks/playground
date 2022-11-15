@@ -13,7 +13,6 @@ const Joi = require('joi');
         MONGO_USERNAME: Joi.string().required(),
         MONGO_PASSWORD: Joi.string().required(),
         MONGO_DATABASE: Joi.string().required(),
-        // MONGO_PATH: Joi.string().required(),
       }),
     }),
     MongooseModule.forRootAsync({

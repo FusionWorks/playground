@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { now, Document } from 'mongoose';
 
 export type PostDocument = Post & Document;
 
@@ -10,6 +10,9 @@ export class Post {
 
   @Prop()
   content: string;
+
+  @Prop({ default: now() })
+  createdAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

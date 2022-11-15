@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 
-export class PostDto {
+export class CreatePostsDto {
   @IsString()
   @IsNotEmpty()
   title: string;
@@ -10,4 +10,4 @@ export class PostDto {
   content: string;
 }
 
-export default PostDto;
+export default CreatePostsDto;
