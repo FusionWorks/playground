@@ -1,0 +1,6 @@
+apiVersion: v2
+name: playground
+description: This is  base chart to deploy Playground service
+type: application
+version: 0.1.0
+appVersion: "1.16.0"

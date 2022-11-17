@@ -1,0 +1,50 @@
+name: Gateway service
+
+on: 
+  push:
+    branches:
+      - master
+    paths:
+      - 'services/gateway-service/**'
+  workflow_dispatch:
+
+env:
+  IMAGE_REPO: some_temp_repo
+
+jobs:
+  build:
+    name: Build Gateway service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v2
+      - name: Build docker image
+        run: |
+          docker build -t $IMAGE_REPO/gateway-service:${{ github.sha }} -f Dockerfile.js ./services/gateway-service
+      - name: Auth with repo
+        run: echo "This is temp"
+      - name: Push docker image to repo
+        run: |
+          docker push $IMAGE_REPO/gateway-service:${{ github.sha }}
+
+  deploy:
+    name: Deploy Gateway service
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the project
+        uses: actions/checkout@v2
+      - name: Secret prepare
+        run: echo "This is temp"
+      - name: Deploy
+        uses: deliverybot/helm@master
+        with:
+          release: gateway-service
+          namespace: playground
+          chart: chart
+          helm: helm3
+          atomic: true
+          version: ${{ github.sha }}
+          values: |
+            name: gateway-service
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'

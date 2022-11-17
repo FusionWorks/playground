@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "playground.fullname" . }}
+  labels:
+    {{- include "playground.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "playground.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "playground.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.app.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{ if .Values.nats.enabled }}
+            {{ toYaml .Values.app.env | nindent 12 }}
+            {{ end }}
