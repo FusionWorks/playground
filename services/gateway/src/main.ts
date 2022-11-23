@@ -12,7 +12,7 @@ async function bootstrap() {
 
   app.connectMicroservice<MicroserviceOptions>({
     strategy: new AugmentedNatsTransport({
-      servers: ['nats://nats:4222'],
+      servers: ['nats://localhost:4222'],
     }),
   });
 

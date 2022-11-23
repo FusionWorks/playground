@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Render } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { Observable, map } from 'rxjs';
 
@@ -70,4 +70,30 @@ export class AppController {
       requests: this.requestsCount++,
     });
   }
+
+  @Get('second-service-posts')
+  async getSecondServicePosts() {
+    return this.appService.getSecondServicePosts();
+  }
+
+  @Get('second-service-post/:id')
+  async getSecondServicePostById(@Param() { id }) {
+    return this.appService.getSecondServicePostById(id);
+  }
+
+  @Post('second-service-create-post')
+  async createSecondServicePost(@Body() post: { title: string, content: string }) {
+    return this.appService.createSecondServicePost(post);
+  }
+
+  @Put('second-service-update-post/:id')
+  async updateSecondServicePost(@Param() { id }, @Body() post: { title: string, content: string }) {
+    return this.appService.updateSecondServicePost(id, post);
+  }
+
+  @Delete('second-service-delete-post/:id')
+  async deleteSecondServicePost(@Param() { id }) {
+    return this.appService.deleteSecondServicePost(id);
+  }
+
 }
