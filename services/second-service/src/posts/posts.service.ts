@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Post, PostDocument } from './post.schema';
-import PostDto from './dto/create-posts.dto';
+import CreatePostsDto from './dto/create-posts.dto';
 
 @Injectable()
 class PostsService {
@@ -20,12 +20,12 @@ class PostsService {
     return post;
   }
 
-  create(postData: PostDto) {
+  create(postData: CreatePostsDto) {
     const createdPost = new this.postModel(postData);
     return createdPost.save();
   }
 
-  async update(id: string, postData: PostDto) {
+  async update(id: string, postData: CreatePostsDto) {
     const post = await this.postModel
       .findByIdAndUpdate(id, postData)
       .setOptions({ overwrite: true, new: true });
@@ -40,6 +40,7 @@ class PostsService {
     if (!result) {
       throw new NotFoundException();
     }
+    return result;
   }
 }
 

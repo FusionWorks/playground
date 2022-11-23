@@ -1,15 +1,18 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  try {
-    const PORT = process.env.PORT || 5000;
-    const app = await NestFactory.create(AppModule);
-    app.enableCors();
-    await app.listen(PORT, () => console.log('App started on port ' + PORT));
-  } catch (e) {
-    console.log('ERR-', e);
-  }
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+    AppModule,
+    {
+      transport: Transport.NATS,
+      options: {
+        servers: ['nats://nats:4222'],
+      },
+    },
+  );
+  await app.listen();
 }
 
 bootstrap();
