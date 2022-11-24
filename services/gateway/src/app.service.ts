@@ -33,23 +33,4 @@ export class AppService {
     this.websocket.send(payload);
   }
 
-  public async getSecondServicePosts() {
-    return await this.natsClient.send('get-posts', {});
-  }
-
-  public async getSecondServicePostById(id: string) {
-    return this.natsClient.send('get-post', id);
-  }
-
-  public async createSecondServicePost(post: { title: string, content: string }) {
-    return this.natsClient.send('create-post', post);
-  }
-
-  public async updateSecondServicePost(id: string, post: { title: string, content: string }) {
-    return this.natsClient.send('update-post', { id, post });
-  }
-
-  public async deleteSecondServicePost(id: string) {
-    return this.natsClient.send('delete-post', id);
-  }
 }
