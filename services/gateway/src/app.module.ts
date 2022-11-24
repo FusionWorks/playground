@@ -12,7 +12,7 @@ import SecondServiceModule from './second-service/second-service.module';
         name: 'NATS_CLIENT',
         transport: Transport.NATS,
         options: {
-          servers: ['nats://localhost:4222'],
+          servers: ['nats://nats:4222'],
         },
       },
     ]),
