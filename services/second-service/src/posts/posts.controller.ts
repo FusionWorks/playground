@@ -1,42 +1,67 @@
-import { Controller } from '@nestjs/common';
 import PostsService from './posts.service';
 import { plainToClass } from '@nestjs/class-transformer';
 import { PostsDto } from './dto/posts.dto';
-import { MessagePattern, Payload } from '@nestjs/microservices';
-import { PostBody } from '../types/posts';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
+import CreatePostsDto from './dto/create-posts.dto';
+import ParamsWithId from './utils/paramsWithId';
+import UpdatePostDto from './dto/update-post.dto';
 
-@Controller('posts')
+@Controller()
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
-  @MessagePattern('get-posts')
+  @Get()
   async getAllPosts() {
     const allPosts = await this.postsService.findAll();
 
     return plainToClass(PostsDto, allPosts, { excludeExtraneousValues: true });
   }
 
-  @MessagePattern('get-post')
-  async getPostById(@Payload() id: string) {
+  @Get(':id')
+  async getPostById(@Param() { id }: ParamsWithId) {
     const postById = await this.postsService.findOne(id);
 
     return plainToClass(PostsDto, postById, { excludeExtraneousValues: true });
   }
 
-  @MessagePattern('create-post')
-  async createPost(@Payload() post: PostBody) {
+  @Post()
+  async createPost(@Body() post: CreatePostsDto) {
     const newPost = await this.postsService.create(post);
 
     return plainToClass(PostsDto, newPost, { excludeExtraneousValues: true });
   }
 
-  @MessagePattern('delete-post')
-  async deletePost(@Payload() id: string) {
+  @Delete(':id')
+  async deletePost(@Param() { id }: ParamsWithId) {
     return this.postsService.delete(id);
   }
 
-  @MessagePattern('update-post')
-  async updatePost(@Payload() { id, post }: { id: string; post: PostBody }) {
+  @Put(':id')
+  async updatePost(
+    @Param() { id }: ParamsWithId,
+    @Body() post: CreatePostsDto,
+  ) {
+    const updatedPost = await this.postsService.update(id, post);
+
+    return plainToClass(PostsDto, updatedPost, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  @Patch(':id')
+  async partialUpdatePost(
+    @Param() { id }: ParamsWithId,
+    @Body() post: UpdatePostDto,
+  ) {
     const updatedPost = await this.postsService.update(id, post);
 
     return plainToClass(PostsDto, updatedPost, {
