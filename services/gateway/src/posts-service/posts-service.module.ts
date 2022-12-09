@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SecondServiceController } from './second-service.controller';
-import { SecondServiceService } from './second-service.service';
+import { PostsServiceController } from './posts-service.controller';
+import { PostsService } from './posts-service.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
@@ -15,9 +15,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
-  controllers: [SecondServiceController],
-  providers: [SecondServiceService],
+  controllers: [PostsServiceController],
+  providers: [PostsService],
 })
-class SecondServiceModule {}
+class PostsServiceModule {}
 
-export default SecondServiceModule;
+export default PostsServiceModule;
