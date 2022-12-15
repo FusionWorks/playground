@@ -42,7 +42,11 @@ export default class PostsController {
 
   @Delete(':id')
   async deletePost(@Param() { id }: ParamsWithId) {
-    return this.postsService.delete(id);
+    const deletedPost = await this.postsService.delete(id);
+
+    return plainToClass(PostsDto, deletedPost, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Put(':id')
@@ -62,7 +66,7 @@ export default class PostsController {
     @Param() { id }: ParamsWithId,
     @Body() post: UpdatePostDto,
   ) {
-    const updatedPost = await this.postsService.update(id, post);
+    const updatedPost = await this.postsService.partialUpdate(id, post);
 
     return plainToClass(PostsDto, updatedPost, {
       excludeExtraneousValues: true,

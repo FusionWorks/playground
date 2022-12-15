@@ -35,6 +35,18 @@ class PostsService {
     return post;
   }
 
+  async partialUpdate(id: string, postData: CreatePostsDto) {
+    const post = await this.postModel
+      .findByIdAndUpdate(id, {
+        $set: postData,
+      })
+      .setOptions({ overwrite: true, new: true });
+    if (!post) {
+      throw new NotFoundException();
+    }
+    return post;
+  }
+
   async delete(postId: string) {
     const result = await this.postModel.findByIdAndDelete(postId);
     if (!result) {
