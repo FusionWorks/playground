@@ -14,7 +14,7 @@ import {
 import CreatePostsDto from './dto/create-posts.dto';
 import ParamsWithId from './utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
-import { ResponseTransformInterceptor } from './posts.interceptor';
+import { ResponseTransformInterceptor } from '../app.interceptor';
 
 @Controller()
 @UseInterceptors(ResponseTransformInterceptor)
