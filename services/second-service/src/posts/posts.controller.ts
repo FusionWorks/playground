@@ -12,11 +12,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import CreatePostsDto from './dto/create-posts.dto';
-import ParamsWithId from './utils/paramsWithId';
+import ParamsWithId from '../utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
 import { ResponseTransformInterceptor } from '../app.interceptor';
 
-@Controller()
+@Controller('posts')
 @UseInterceptors(ResponseTransformInterceptor)
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}

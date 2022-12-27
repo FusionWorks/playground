@@ -4,7 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import PostsModule from './posts/posts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-const Joi = require('joi');
+import UsersModule from './users/users.module';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ const Joi = require('joi');
       inject: [ConfigService],
     }),
     PostsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
