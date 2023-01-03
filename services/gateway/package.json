@@ -30,6 +30,7 @@
     "nats": "2.6.1",
     "pug": "3.0.2",
     "reflect-metadata": "0.1.13",
+    "class-validator": "^0.13.2",
     "rimraf": "3.0.2",
     "rxjs": "7.5.5",
     "socket.io": "4.5.0"

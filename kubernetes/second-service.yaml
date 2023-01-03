@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: second-service
+  name: posts-service
   labels:
-    app: second-service
+    app: posts-service
 spec:
   selector:
     matchLabels:
-      app: second-service
+      app: posts-service
   template:
     metadata:
       labels:
-        app: second-service
+        app: posts-service
     spec:
       containers:
-      - name: second-service
-        image: second-service:latest
+      - name: posts-service
+        image: posts-service:latest

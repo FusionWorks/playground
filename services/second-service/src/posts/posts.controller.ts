@@ -15,6 +15,7 @@ import CreatePostsDto from './dto/create-posts.dto';
 import ParamsWithId from '../utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
 import { ResponseTransformInterceptor } from '../app.interceptor';
+import { UpdatePostsDto } from './dto/update-posts.dto';
 
 @Controller('posts')
 @UseInterceptors(ResponseTransformInterceptor)
@@ -41,6 +42,7 @@ export default class PostsController {
     return this.postsService.delete(id);
   }
 
+  @UseInterceptors(new ResponseTransformInterceptor(UpdatePostsDto))
   @Put(':id')
   async updatePost(
     @Param() { id }: ParamsWithId,
@@ -49,6 +51,7 @@ export default class PostsController {
     return this.postsService.update(id, post);
   }
 
+  @UseInterceptors(new ResponseTransformInterceptor(UpdatePostsDto))
   @Patch(':id')
   async partialUpdatePost(
     @Param() { id }: ParamsWithId,

@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { PostsService } from './posts-service.service';
+import CreatePostsDto from './dto/create-posts.dto';
 
 @Controller('posts-service')
 export class PostsServiceController {
@@ -25,23 +26,17 @@ export class PostsServiceController {
   }
 
   @Post()
-  async createPost(@Body() post: { title: string; content: string }) {
+  async createPost(@Body() post: CreatePostsDto) {
     return this.postsService.createPost(post);
   }
 
   @Put(':id')
-  async updatePost(
-    @Param() { id },
-    @Body() post: { title: string; content: string },
-  ) {
+  async updatePost(@Param() { id }, @Body() post: CreatePostsDto) {
     return this.postsService.updatePost(id, post);
   }
 
   @Patch(':id')
-  async partialUpdatePost(
-    @Param() { id },
-    @Body() post: { title: string; content: string },
-  ) {
+  async partialUpdatePost(@Param() { id }, @Body() post: CreatePostsDto) {
     return this.postsService.partialUpdatePost(id, post);
   }
 
