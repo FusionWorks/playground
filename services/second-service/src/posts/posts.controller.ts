@@ -16,6 +16,7 @@ import ParamsWithId from '../utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
 import { ResponseTransformInterceptor } from '../app.interceptor';
 import { UpdatePostsDto } from './dto/update-posts.dto';
+import { TransformPlainToClass } from '@nestjs/class-transformer';
 
 @Controller('posts')
 @UseInterceptors(ResponseTransformInterceptor)
@@ -42,8 +43,8 @@ export default class PostsController {
     return this.postsService.delete(id);
   }
 
-  @UseInterceptors(new ResponseTransformInterceptor(UpdatePostsDto))
   @Put(':id')
+  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
   async updatePost(
     @Param() { id }: ParamsWithId,
     @Body() post: CreatePostsDto,
