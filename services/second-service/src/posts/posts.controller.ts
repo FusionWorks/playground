@@ -9,31 +9,51 @@ import {
   Patch,
   Post,
   Put,
-  UseInterceptors,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import CreatePostsDto from './dto/create-posts.dto';
 import ParamsWithId from '../utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
-import { ResponseTransformInterceptor } from '../app.interceptor';
 import { UpdatePostsDto } from './dto/update-posts.dto';
-import { TransformPlainToClass } from '@nestjs/class-transformer';
+import { plainToClass, TransformPlainToClass } from '@nestjs/class-transformer';
+import { GetPostsDto, PostsDto, PostsWithPaginationDto } from './dto/posts.dto';
 
 @Controller('posts')
-@UseInterceptors(ResponseTransformInterceptor)
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  async getAllPosts() {
-    return this.postsService.findAll();
+  @TransformPlainToClass(PostsWithPaginationDto, {
+    excludeExtraneousValues: true,
+  })
+  @UsePipes(new ValidationPipe())
+  async getAllPosts(@Query() query: GetPostsDto) {
+    const { limit, offset } = query;
+    const posts = await this.postsService.findAll(limit, offset);
+    const total = await this.postsService.countDocuments();
+
+    return {
+      posts: await Promise.all(
+        posts.map((post) => plainToClass(PostsDto, post)),
+      ),
+      pagination: {
+        total,
+        limit: Number(limit),
+        offset: Number(offset),
+      },
+    };
   }
 
   @Get(':id')
+  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
   async getPostById(@Param() { id }: ParamsWithId) {
     return this.postsService.findOne(id);
   }
 
   @Post()
+  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
   async createPost(@Body() post: CreatePostsDto) {
     return this.postsService.create(post);
   }
@@ -52,8 +72,8 @@ export default class PostsController {
     return this.postsService.update(id, post);
   }
 
-  @UseInterceptors(new ResponseTransformInterceptor(UpdatePostsDto))
   @Patch(':id')
+  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
   async partialUpdatePost(
     @Param() { id }: ParamsWithId,
     @Body() post: UpdatePostDto,

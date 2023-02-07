@@ -6,10 +6,15 @@ import { Post, PostDocument } from './post.schema';
 
 @Injectable()
 class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
+  }
 
-  async findAll() {
-    return this.postModel.find();
+  async countDocuments() {
+    return this.postModel.countDocuments().exec();
+  }
+
+  async findAll(limit, offset) {
+    return this.postModel.find().limit(limit).skip(offset).exec();
   }
 
   async findOne(id: string) {

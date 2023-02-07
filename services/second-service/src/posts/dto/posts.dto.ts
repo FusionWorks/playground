@@ -1,7 +1,8 @@
 import { Expose, Transform } from '@nestjs/class-transformer';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export class PostsDto {
-  @Expose() // or we can use @Exclude to exclude it
+  @Expose()
   id: string;
 
   @Expose()
@@ -16,4 +17,26 @@ export class PostsDto {
     value ? new Date(value).toJSON().slice(0, 10).replace(/-/g, '/') : null,
   )
   createdAt: Date | null;
+}
+
+export class PaginationDto {
+  total: number;
+  limit: number;
+  offset: number;
+}
+
+export class PostsWithPaginationDto {
+  @Expose()
+  posts: PostsDto[];
+
+  @Expose()
+  pagination: PaginationDto;
+}
+
+export class GetPostsDto {
+  @IsNotEmpty()
+  limit: number;
+
+  @IsOptional()
+  offset = 0;
 }
