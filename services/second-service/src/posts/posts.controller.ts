@@ -35,10 +35,10 @@ export default class PostsController {
     const total = await this.postsService.countDocuments();
 
     return {
-      posts: await Promise.all(
+      data: await Promise.all(
         posts.map((post) => plainToClass(PostsDto, post)),
       ),
-      pagination: {
+      meta: {
         total,
         limit: Number(limit),
         offset: Number(offset),

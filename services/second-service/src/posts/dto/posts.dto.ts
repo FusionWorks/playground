@@ -1,5 +1,8 @@
 import { Expose, Transform } from '@nestjs/class-transformer';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import {
+  DataWithPaginationDto,
+  PaginationParamsDto,
+} from '../../generics/common.dto';
 
 export class PostsDto {
   @Expose()
@@ -19,24 +22,5 @@ export class PostsDto {
   createdAt: Date | null;
 }
 
-export class PaginationDto {
-  total: number;
-  limit: number;
-  offset: number;
-}
-
-export class PostsWithPaginationDto {
-  @Expose()
-  posts: PostsDto[];
-
-  @Expose()
-  pagination: PaginationDto;
-}
-
-export class GetPostsDto {
-  @IsNotEmpty()
-  limit: number;
-
-  @IsOptional()
-  offset = 0;
-}
+export class PostsWithPaginationDto extends DataWithPaginationDto<PostsDto> {}
+export class GetPostsDto extends PaginationParamsDto {}
