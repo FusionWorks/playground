@@ -2,7 +2,7 @@ import { Expose, Transform } from '@nestjs/class-transformer';
 import {
   DataWithPaginationDto,
   PaginationParamsDto,
-} from '../../generics/common.dto';
+} from '../../common/generics.dto';
 
 export class PostsDto {
   @Expose()

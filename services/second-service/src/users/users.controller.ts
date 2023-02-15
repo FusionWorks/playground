@@ -8,7 +8,9 @@ import {
 import CreateUsersDto from './dto/create-users.dto';
 import ParamsWithId from '../utils/paramsWithId';
 import UsersService from './users.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export default class UsersController {
   constructor(private readonly usersService: UsersService) {}

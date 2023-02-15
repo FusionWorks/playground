@@ -1,8 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { now, Document } from 'mongoose';
 
-export type PostDocument = Post & Document;
-
 @Schema()
 export class Post {
   @Prop()
@@ -16,6 +14,8 @@ export class Post {
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
+
+export type PostDocument = Post & Document;
 
 export const postForFeature = {
   name: Post.name,
