@@ -2,15 +2,15 @@ import { ApiParam, ApiQuery } from '@nestjs/swagger';
 
 export const swaggerConfig = {
   query: {
-    perPage: ApiQuery({
-      name: 'perPage',
-      description: 'Limit the number of results per page',
+    limit: ApiQuery({
+      name: 'limit',
+      description: 'Limit the number of results',
       example: 10,
     }),
-    page: ApiQuery({
-      name: 'page',
-      description: 'Page',
-      example: 1,
+    offset: ApiQuery({
+      name: 'offset',
+      description: 'Offset',
+      example: 0,
       required: false,
     }),
   },

@@ -23,21 +23,17 @@ import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
 
-import { TransformResponseInterceptor } from '../common/interceptors';
+import { TransformPaginationResponseInterceptor } from '../common/interceptors';
 
 @ApiTags('Posts')
 @Controller('posts')
 export default class PostsController {
-  constructor(private readonly postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) { }
 
-  @swaggerConfig.query.perPage
-  @swaggerConfig.query.page
   @Get()
-  @UseInterceptors(new TransformResponseInterceptor(PostsDto))
-  @UsePipes(new ValidationPipe({ transform: true }))
+  @UseInterceptors(new TransformPaginationResponseInterceptor(PostsDto, { excludeExtraneousValues: true }))
   async getAllPosts(@Query() query: GetPostsDto) {
-    const { perPage, page } = query;
-    return this.postsService.findAll(page, perPage);
+    return this.postsService.findAll(query);
   }
 
   @swaggerConfig.param.id

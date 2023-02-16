@@ -1,20 +1,20 @@
 import { clone } from 'lodash';
 import { Query } from 'mongoose';
+import { DataWithPaginationDto } from './generics.dto';
 
-const defaultOptions = { perPage: 10, page: 1 };
+const defaultOptions = { limit: 10, offset: 0 };
 
-export const findAllWithPagination = async <T>(
+export const paginate = async <T>(
   query: Query<any, T>,
   options = defaultOptions,
-) => {
-  const { perPage, page } = options;
+): Promise<DataWithPaginationDto<T>> => {
+  const { limit, offset } = options;
   const _query = clone(query);
 
-  const total = await _query.count().exec();
-  const lastPage = Math.ceil(total / perPage!);
+  const total = (Number)(await _query.count().exec());
   const data = await query
-    .limit(perPage!)
-    .skip(perPage! * (page! - 1))
+    .limit(limit!)
+    .skip(offset)
     .exec();
-  return { data, metadata: { total, perPage, page, lastPage } };
+  return { data, meta: { total, limit, offset } };
 };

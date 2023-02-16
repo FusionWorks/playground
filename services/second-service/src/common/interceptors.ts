@@ -8,13 +8,14 @@ import { plainToClass } from '@nestjs/class-transformer';
 import { Observable } from 'rxjs';
 import { DataWithPaginationDto } from './generics.dto';
 import { map } from 'rxjs/operators';
+import { ClassTransformOptions } from 'class-transformer';
 
 @Injectable()
-export class TransformResponseInterceptor<T>
+export class TransformPaginationResponseInterceptor<T>
   implements
-    NestInterceptor<{ data: T[]; total: number }, DataWithPaginationDto<T>>
+  NestInterceptor<DataWithPaginationDto<any>, DataWithPaginationDto<T>>
 {
-  constructor(private readonly dtoClass: new () => T) {}
+  constructor(private readonly dtoClass: new () => T, private readonly options?: ClassTransformOptions) { }
 
   intercept(
     context: ExecutionContext,
@@ -22,16 +23,14 @@ export class TransformResponseInterceptor<T>
   ): Observable<DataWithPaginationDto<T>> {
     return next.handle().pipe(
       map((response) => {
-        const { data, metadata } = response;
+        const { data, meta } = response;
         const transformedData = data.map((item) => {
-          return plainToClass(this.dtoClass, item, {
-            excludeExtraneousValues: true,
-          });
+          return plainToClass(this.dtoClass, item, this.options);
         });
 
         return {
           data: transformedData,
-          metadata,
+          meta,
         };
       }),
     );

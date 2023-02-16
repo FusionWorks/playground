@@ -12,17 +12,17 @@ export class PaginationParamsDto {
   @IsInt()
   @Min(1)
   @IsOptional()
-  readonly perPage?: number = 10;
+  readonly limit: number = 10;
 
   @ApiPropertyOptional({
-    minimum: 1,
-    default: 1,
+    minimum: 0,
+    default: 0,
   })
   @Type(() => Number)
   @IsInt()
-  @Min(1)
+  @Min(0)
   @IsOptional()
-  readonly page?: number = 1;
+  readonly offset: number = 0;
 }
 
 export class DataWithPaginationDto<T> {
@@ -30,10 +30,9 @@ export class DataWithPaginationDto<T> {
   data: T[];
 
   @Expose()
-  metadata: {
+  meta: {
     total: number;
-    perPage: number;
-    page: number;
-    lastPage: number;
+    limit: number;
+    offset: number;
   };
 }
