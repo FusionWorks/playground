@@ -5,24 +5,24 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class PaginationParamsDto {
   @ApiPropertyOptional({
-    minimum: 0,
+    minimum: 1,
     default: 10,
   })
   @Type(() => Number)
   @IsInt()
   @Min(1)
   @IsOptional()
-  readonly limit?: number = 10;
+  readonly perPage?: number = 10;
 
   @ApiPropertyOptional({
-    minimum: 0,
-    default: 0,
+    minimum: 1,
+    default: 1,
   })
   @Type(() => Number)
   @IsInt()
-  @Min(0)
+  @Min(1)
   @IsOptional()
-  readonly offset?: number = 0;
+  readonly page?: number = 1;
 }
 
 export class DataWithPaginationDto<T> {
@@ -30,9 +30,10 @@ export class DataWithPaginationDto<T> {
   data: T[];
 
   @Expose()
-  meta: {
+  metadata: {
     total: number;
-    limit: number;
-    offset: number;
+    perPage: number;
+    page: number;
+    lastPage: number;
   };
 }

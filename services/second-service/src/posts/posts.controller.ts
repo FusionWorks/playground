@@ -22,6 +22,7 @@ import { TransformPlainToClass } from '@nestjs/class-transformer';
 import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
+
 import { TransformResponseInterceptor } from '../common/interceptors';
 
 @ApiTags('Posts')
@@ -29,18 +30,14 @@ import { TransformResponseInterceptor } from '../common/interceptors';
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
-  @swaggerConfig.query.limit
-  @swaggerConfig.query.offset
+  @swaggerConfig.query.perPage
+  @swaggerConfig.query.page
   @Get()
   @UseInterceptors(new TransformResponseInterceptor(PostsDto))
   @UsePipes(new ValidationPipe({ transform: true }))
   async getAllPosts(@Query() query: GetPostsDto) {
-    const { limit, offset } = query;
-    const { data, total } = await this.postsService.findAllWithTotal(
-      limit,
-      offset,
-    );
-    return { data, total };
+    const { perPage, page } = query;
+    return this.postsService.findAll(page, perPage);
   }
 
   @swaggerConfig.param.id

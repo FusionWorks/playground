@@ -21,9 +21,8 @@ export class TransformResponseInterceptor<T>
     next: CallHandler,
   ): Observable<DataWithPaginationDto<T>> {
     return next.handle().pipe(
-      map((response: { data: T[]; total: number }) => {
-        const { data, total } = response;
-
+      map((response) => {
+        const { data, metadata } = response;
         const transformedData = data.map((item) => {
           return plainToClass(this.dtoClass, item, {
             excludeExtraneousValues: true,
@@ -32,11 +31,7 @@ export class TransformResponseInterceptor<T>
 
         return {
           data: transformedData,
-          meta: {
-            total,
-            limit: 10,
-            offset: 0,
-          },
+          metadata,
         };
       }),
     );
