@@ -3,21 +3,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import CreatePostsDto from './dto/create-posts.dto';
 import { Post, PostDocument } from './post.schema';
+import { findAllWithPagination } from '../common/pagination';
 
 @Injectable()
 class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
-  }
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
-  async findAll(page, perPage) {
-    const data = await this.postModel
-      .find()
-      .limit(perPage!)
-      .skip(perPage! * (page! - 1))
-      .exec();
-    const total = await this.postModel.countDocuments().exec();
-    const lastPage = Math.ceil(total / perPage!);
-    return { data, metadata: { total, perPage, page, lastPage } };
+  async findAll(page: number, perPage: number) {
+    return findAllWithPagination(this.postModel.find(), { page, perPage });
   }
 
   async findOne(id: string) {
