@@ -19,10 +19,10 @@ import ParamsWithId from '../utils/paramsWithId';
 import UpdatePostDto from './dto/update-post.dto';
 import { UpdatePostsDto } from './dto/update-posts.dto';
 import { TransformPlainToClass } from '@nestjs/class-transformer';
-import { GetPostsDto, PostsDto, PostsWithPaginationDto } from './dto/posts.dto';
+import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
-import { TransformDataInterceptor } from '../common/interceptors';
+import { TransformResponseInterceptor } from '../common/interceptors';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -32,23 +32,15 @@ export default class PostsController {
   @swaggerConfig.query.limit
   @swaggerConfig.query.offset
   @Get()
-  @UseInterceptors(new TransformDataInterceptor(PostsDto))
-  @TransformPlainToClass(PostsWithPaginationDto, {
-    excludeExtraneousValues: false,
-  })
+  @UseInterceptors(new TransformResponseInterceptor(PostsDto))
   @UsePipes(new ValidationPipe({ transform: true }))
   async getAllPosts(@Query() query: GetPostsDto) {
     const { limit, offset } = query;
-    const data = await this.postsService.findAll(limit, offset);
-    const total = await this.postsService.countDocuments();
-    return {
-      data,
-      meta: {
-        total,
-        limit: Number(limit),
-        offset: Number(offset),
-      },
-    };
+    const { data, total } = await this.postsService.findAllWithTotal(
+      limit,
+      offset,
+    );
+    return { data, total };
   }
 
   @swaggerConfig.param.id

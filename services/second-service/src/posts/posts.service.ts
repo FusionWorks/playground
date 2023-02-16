@@ -6,8 +6,7 @@ import { Post, PostDocument } from './post.schema';
 
 @Injectable()
 class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {
-  }
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   async countDocuments() {
     return this.postModel.countDocuments().exec();
@@ -15,6 +14,12 @@ class PostsService {
 
   async findAll(limit, offset) {
     return this.postModel.find().limit(limit).skip(offset).exec();
+  }
+
+  async findAllWithTotal(limit: number, offset: number) {
+    const data = await this.findAll(limit, offset);
+    const total = await this.countDocuments();
+    return { data, total };
   }
 
   async findOne(id: string) {

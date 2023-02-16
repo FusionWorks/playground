@@ -1,8 +1,5 @@
 import { Expose, Transform } from '@nestjs/class-transformer';
-import {
-  DataWithPaginationDto,
-  PaginationParamsDto,
-} from '../../common/generics.dto';
+import { PaginationParamsDto } from '../../common/generics.dto';
 
 export class PostsDto {
   @Expose()
@@ -22,5 +19,4 @@ export class PostsDto {
   createdAt: Date | null;
 }
 
-export class PostsWithPaginationDto extends DataWithPaginationDto<PostsDto> {}
 export class GetPostsDto extends PaginationParamsDto {}
