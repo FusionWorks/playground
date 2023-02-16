@@ -36,7 +36,7 @@ export default class PostsController {
   @TransformPlainToClass(PostsWithPaginationDto, {
     excludeExtraneousValues: false,
   })
-  @UsePipes(new ValidationPipe())
+  @UsePipes(new ValidationPipe({ transform: true }))
   async getAllPosts(@Query() query: GetPostsDto) {
     const { limit, offset } = query;
     const data = await this.postsService.findAll(limit, offset);
