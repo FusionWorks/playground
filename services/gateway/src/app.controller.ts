@@ -1,4 +1,4 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Render } from '@nestjs/common';
 import { EventPattern, Payload } from '@nestjs/microservices';
 import { Observable, map } from 'rxjs';
 
@@ -70,4 +70,5 @@ export class AppController {
       requests: this.requestsCount++,
     });
   }
+
 }
