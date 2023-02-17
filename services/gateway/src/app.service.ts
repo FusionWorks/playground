@@ -32,5 +32,4 @@ export class AppService {
   public notifyConnectedClients(payload: Record<string, any>) {
     this.websocket.send(payload);
   }
-
 }
