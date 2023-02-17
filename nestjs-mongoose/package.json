@@ -1,8 +1,8 @@
 {
-  "name": "second-service",
+  "name": "@fusionworks/playground-nestjs-mongoose",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "An example of NestJS project with Mongoose",
+  "author": "FusionWorks",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
