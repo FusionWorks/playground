@@ -18,14 +18,6 @@ docker_build(
 )
 
 docker_build(
-    ref='second-service',
-    context='services/second-service',
-    dockerfile='services/second-service/Dockerfile',
-    live_update=[sync('services/second-service', '/app')],
-    entrypoint=['npm', 'run', 'start:debug']
-)
-
-docker_build(
     ref='cron-service',
     context='services/cron-service',
     dockerfile='services/cron-service/Dockerfile',
@@ -53,8 +45,8 @@ k8s_yaml([
 
 # Config K8s resources
 k8s_resource('first-service', labels=['backend'], resource_deps=['nats'])
-k8s_resource('gateway', port_forwards=3000, labels=['backend'], resource_deps=['nats'])
-k8s_resource('second-service', labels=['backend'], resource_deps=['nats'])
+k8s_resource('gateway', port_forwards=3000, labels=[
+             'backend'], resource_deps=['nats'])
 k8s_resource('cron-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('auth-service', labels=['backend'], resource_deps=['nats'])
 k8s_resource('nats', labels=['services'])

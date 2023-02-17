@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import PostsModule from './posts/posts.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import UsersModule from './users/users.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -32,9 +31,8 @@ import * as Joi from 'joi';
       inject: [ConfigService],
     }),
     PostsModule,
-    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
