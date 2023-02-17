@@ -20,7 +20,7 @@ import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
 
-import { TransforPaginationResponse } from '../common/pagination/transform-pagination-response.decorator';
+import { TransformPaginationResponse } from '../common/pagination/transform-pagination-response.decorator';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -28,7 +28,7 @@ export default class PostsController {
   constructor(private readonly postsService: PostsService) { }
 
   @Get()
-  @TransforPaginationResponse(PostsDto, { excludeExtraneousValues: true })
+  @TransformPaginationResponse(PostsDto, { excludeExtraneousValues: true })
   async getAllPosts(@Query() query: GetPostsDto) {
     return this.postsService.findAll(query);
   }

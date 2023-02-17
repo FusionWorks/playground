@@ -38,7 +38,8 @@ export class DataWithPaginationDto<T> {
   };
 }
 
-export function transformPlainToDataWithPaginationDto<T>(cls: ClassConstructor<T>, plain, options?: ClassTransformOptions): DataWithPaginationDto<T> {
+export function transformPlainToDataWithPaginationDto<T>(cls: ClassConstructor<T>,
+  plain: DataWithPaginationDto<T>, options?: ClassTransformOptions): DataWithPaginationDto<T> {
   const { data, meta } = plain;
   const transformedData = data.map((item) => {
     return plainToClass(cls, item, options);
