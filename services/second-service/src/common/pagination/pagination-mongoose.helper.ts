@@ -1,6 +1,6 @@
 import { clone } from 'lodash';
 import { Query } from 'mongoose';
-import { DataWithPaginationDto } from './generics.dto';
+import { DataWithPaginationDto } from './pagination.dto';
 
 const defaultOptions = { limit: 10, offset: 0 };
 

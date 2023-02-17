@@ -3,8 +3,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import CreatePostsDto from './dto/create-posts.dto';
 import { Post, PostDocument } from './post.schema';
-import { paginate } from '../common/pagination';
-import { PaginationParamsDto } from 'src/common/generics.dto';
+import { paginate } from '../common/pagination/pagination-mongoose.helper';
+import { PaginationParamsDto } from '../common/pagination/pagination.dto';
 
 @Injectable()
 class PostsService {

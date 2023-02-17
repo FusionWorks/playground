@@ -10,9 +10,6 @@ import {
   Post,
   Put,
   Query,
-  UseInterceptors,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import CreatePostsDto from './dto/create-posts.dto';
 import ParamsWithId from '../utils/paramsWithId';
@@ -23,7 +20,7 @@ import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
 
-import { TransformPaginationResponseInterceptor } from '../common/interceptors';
+import { TransforPaginationResponse } from '../common/pagination/transform-pagination-response.decorator';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -31,7 +28,7 @@ export default class PostsController {
   constructor(private readonly postsService: PostsService) { }
 
   @Get()
-  @UseInterceptors(new TransformPaginationResponseInterceptor(PostsDto, { excludeExtraneousValues: true }))
+  @TransforPaginationResponse(PostsDto, { excludeExtraneousValues: true })
   async getAllPosts(@Query() query: GetPostsDto) {
     return this.postsService.findAll(query);
   }
