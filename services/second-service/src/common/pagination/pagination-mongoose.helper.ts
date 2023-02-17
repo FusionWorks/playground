@@ -13,7 +13,7 @@ export const paginate = async <T>(
 
   const total = (Number)(await _query.count().exec());
   const data = await query
-    .limit(limit!)
+    .limit(limit)
     .skip(offset)
     .exec();
   return { data, meta: { total, limit, offset } };

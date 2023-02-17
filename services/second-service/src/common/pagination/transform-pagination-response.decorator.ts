@@ -1,7 +1,7 @@
 import { ClassConstructor, ClassTransformer, ClassTransformOptions } from "@nestjs/class-transformer";
 import { transformPlainToDataWithPaginationDto } from "./pagination.dto";
 
-export function TransforPaginationResponse(
+export function TransformPaginationResponse(
   classType: ClassConstructor<any>,
   params?: ClassTransformOptions
 ): MethodDecorator {
