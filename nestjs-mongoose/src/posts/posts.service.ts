@@ -15,7 +15,7 @@ class PostsService {
   }
 
   async findOne(id: string) {
-    const post = await this.postModel.findOne({ id });
+    const post = await this.postModel.findById(id);
     if (!post) {
       throw new NotFoundException();
     }
@@ -39,10 +39,8 @@ class PostsService {
 
   async partialUpdate(id: string, postData: CreatePostsDto) {
     const post = await this.postModel
-      .findByIdAndUpdate(id, {
-        $set: postData,
-      })
-      .setOptions({ overwrite: true, new: true });
+      .findByIdAndUpdate(id, postData)
+      .setOptions({ new: true });
     if (!post) {
       throw new NotFoundException();
     }
