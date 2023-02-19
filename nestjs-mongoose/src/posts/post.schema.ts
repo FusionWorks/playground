@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AuditableEntity } from 'src/common/schema/auditable-entity.schema';
+import { AuditableEntity } from '../common/schema/auditable-entity.schema';
 
 export type PostDocument = Post & Document;
 

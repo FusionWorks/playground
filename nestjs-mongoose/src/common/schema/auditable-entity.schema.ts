@@ -4,15 +4,15 @@ import { now } from "mongoose";
 export class AuditableEntity {
 
   @Prop({ default: now() })
-  createdAt: Date;
+  createdAt?: Date;
 
   @Prop()
-  createdBy: String;
+  createdBy?: String;
 
   @Prop({ default: now() })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Prop()
-  updatedBy: String;
+  updatedBy?: String;
 
 }
