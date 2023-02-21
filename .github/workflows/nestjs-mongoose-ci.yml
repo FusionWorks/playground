@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+defaults:
+  run:
+    working-directory: ./nestjs-mongoose
+
 jobs:
   build:
     runs-on: ubuntu-latest
