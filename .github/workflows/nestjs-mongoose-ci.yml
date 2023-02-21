@@ -14,7 +14,7 @@ defaults:
     working-directory: ./nestjs-mongoose
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,14 +30,14 @@ jobs:
       - name: Install dependencies
         if: steps.deps_cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
-      - name: Run build API
-        run: yarn run build:api
-      - name: Run build CRON
-        run: yarn run build:cron
+      - name: Run build 
+        run: yarn build
+      - name: Run tests with coverage 
+        run: yarn test:cov
   scan:
     runs-on: ubuntu-latest
     needs:
-    - build
+    - build-and-test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
