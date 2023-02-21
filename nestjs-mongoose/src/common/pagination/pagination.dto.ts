@@ -1,5 +1,10 @@
 import { IsInt, IsOptional, Min } from 'class-validator';
-import { ClassConstructor, ClassTransformOptions, Expose, plainToClass } from '@nestjs/class-transformer';
+import {
+  ClassConstructor,
+  ClassTransformOptions,
+  Expose,
+  plainToClass,
+} from '@nestjs/class-transformer';
 import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -26,7 +31,6 @@ export class PaginationParamsDto {
 }
 
 export class DataWithPaginationDto<T> {
-
   @Expose()
   data: T[];
 
@@ -38,8 +42,11 @@ export class DataWithPaginationDto<T> {
   };
 }
 
-export function transformPlainToDataWithPaginationDto<T>(cls: ClassConstructor<T>,
-  plain: DataWithPaginationDto<T>, options?: ClassTransformOptions): DataWithPaginationDto<T> {
+export function transformPlainToDataWithPaginationDto<T>(
+  cls: ClassConstructor<T>,
+  plain: DataWithPaginationDto<T>,
+  options?: ClassTransformOptions,
+): DataWithPaginationDto<T> {
   const { data, meta } = plain;
   const transformedData = data.map((item) => {
     return plainToClass(cls, item, options);

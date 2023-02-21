@@ -1,14 +1,14 @@
 import { Model } from 'mongoose';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import CreatePostsDto from './dto/create-posts.dto';
+import { CreatePostDto, UpdatePostDto } from './dto/create-update-posts.dto';
 import { Post, PostDocument } from './post.schema';
 import { paginate } from '../common/pagination/pagination-mongoose.helper';
 import { PaginationParamsDto } from '../common/pagination/pagination.dto';
 
 @Injectable()
 class PostsService {
-  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) { }
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   async findAll(paginationParams: PaginationParamsDto) {
     return paginate(this.postModel.find(), paginationParams);
@@ -22,12 +22,12 @@ class PostsService {
     return post;
   }
 
-  create(postData: CreatePostsDto) {
+  create(postData: CreatePostDto) {
     const createdPost = new this.postModel(postData);
     return createdPost.save();
   }
 
-  async update(id: string, postData: CreatePostsDto) {
+  async update(id: string, postData: CreatePostDto) {
     const post = await this.postModel
       .findByIdAndUpdate(id, postData)
       .setOptions({ overwrite: true, new: true });
@@ -37,7 +37,7 @@ class PostsService {
     return post;
   }
 
-  async partialUpdate(id: string, postData: CreatePostsDto) {
+  async partialUpdate(id: string, postData: UpdatePostDto) {
     const post = await this.postModel
       .findByIdAndUpdate(id, {
         $set: postData,
