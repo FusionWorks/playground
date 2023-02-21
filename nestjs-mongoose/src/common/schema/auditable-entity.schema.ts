@@ -7,12 +7,12 @@ export class AuditableEntity {
   createdAt?: Date;
 
   @Prop()
-  createdBy?: String;
+  createdBy?: string;
 
   @Prop({ default: now() })
   updatedAt?: Date;
 
   @Prop()
-  updatedBy?: String;
+  updatedBy?: string;
 
 }
