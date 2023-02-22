@@ -1,18 +1,19 @@
-import { ClassConstructor, ClassTransformer, ClassTransformOptions } from "@nestjs/class-transformer";
-import { transformPlainToDataWithPaginationDto } from "./pagination.dto";
+import {
+  ClassConstructor,
+  ClassTransformOptions,
+} from '@nestjs/class-transformer';
+import { transformPlainToDataWithPaginationDto } from './pagination.dto';
 
 export function TransformPaginationResponse(
   classType: ClassConstructor<any>,
-  params?: ClassTransformOptions
+  params?: ClassTransformOptions,
 ): MethodDecorator {
   return function (
     target: Record<string, any>,
-    propertyKey: string | Symbol,
-    descriptor: PropertyDescriptor
+    propertyKey: string | symbol,
+    descriptor: PropertyDescriptor,
   ): void {
-    const classTransformer: ClassTransformer = new ClassTransformer();
     const originalMethod = descriptor.value;
-
     descriptor.value = function (...args: any[]): Record<string, any> {
       const result: any = originalMethod.apply(this, args);
       const isPromise =
@@ -21,10 +22,9 @@ export function TransformPaginationResponse(
         typeof result.then === 'function';
       return isPromise
         ? result.then((data: any) =>
-          transformPlainToDataWithPaginationDto(classType, data, params)
-        )
+            transformPlainToDataWithPaginationDto(classType, data, params),
+          )
         : transformPlainToDataWithPaginationDto(classType, result, params);
     };
   };
 }
-

@@ -11,10 +11,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import CreatePostsDto from './dto/create-posts.dto';
 import ParamsWithId from '../utils/paramsWithId';
-import UpdatePostDto from './dto/update-post.dto';
-import { UpdatePostsDto } from './dto/update-posts.dto';
+import { UpdatePostDto, CreatePostDto } from './dto/create-update-posts.dto';
 import { TransformPlainToClass } from '@nestjs/class-transformer';
 import { GetPostsDto, PostsDto } from './dto/posts.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
@@ -41,10 +39,10 @@ export default class PostsController {
   }
 
   @Post()
-  @ApiBody({ type: CreatePostsDto })
+  @ApiBody({ type: CreatePostDto })
   @ApiBody(swaggerConfig.body)
   @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
-  async createPost(@Body() post: CreatePostsDto) {
+  async createPost(@Body() post: CreatePostDto) {
     return this.postsService.create(post);
   }
 
@@ -57,18 +55,15 @@ export default class PostsController {
   @swaggerConfig.param.id
   @ApiBody(swaggerConfig.body)
   @Put(':id')
-  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
-  async updatePost(
-    @Param() { id }: ParamsWithId,
-    @Body() post: CreatePostsDto,
-  ) {
+  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
+  async updatePost(@Param() { id }: ParamsWithId, @Body() post: CreatePostDto) {
     return this.postsService.update(id, post);
   }
 
   @swaggerConfig.param.id
   @ApiBody(swaggerConfig.body)
   @Patch(':id')
-  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
+  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
   async partialUpdatePost(
     @Param() { id }: ParamsWithId,
     @Body() post: UpdatePostDto,
