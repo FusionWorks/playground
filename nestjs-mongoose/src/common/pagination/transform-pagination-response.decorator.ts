@@ -7,7 +7,7 @@ export function TransformPaginationResponse(
 ): MethodDecorator {
   return function (
     target: Record<string, any>,
-    propertyKey: string | Symbol,
+    propertyKey: string | symbol,
     descriptor: PropertyDescriptor
   ): void {
     const classTransformer: ClassTransformer = new ClassTransformer();

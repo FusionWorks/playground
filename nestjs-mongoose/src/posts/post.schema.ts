@@ -1,18 +1,16 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { now, Document } from 'mongoose';
+import { Document } from 'mongoose';
+import { AuditableEntity } from '../common/schema/auditable-entity.schema';
 
 export type PostDocument = Post & Document;
 
-@Schema()
-export class Post {
+@Schema({ timestamps: true })
+export class Post extends AuditableEntity {
   @Prop()
   title: string;
 
   @Prop()
   content: string;
-
-  @Prop({ default: now() })
-  createdAt: Date;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

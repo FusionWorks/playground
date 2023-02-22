@@ -1,13 +1,5 @@
-import { IsOptional, IsString } from 'class-validator';
+import CreatePostDto from './create-post.dto';
 
-export class UpdatePostDto {
-  @IsString()
-  @IsOptional()
-  title: string;
-
-  @IsString()
-  @IsOptional()
-  content: string;
-}
+export class UpdatePostDto extends CreatePostDto { }
 
 export default UpdatePostDto;

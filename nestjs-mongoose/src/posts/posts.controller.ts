@@ -11,16 +11,17 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import CreatePostsDto from './dto/create-posts.dto';
+import CreatePostDto from './dto/create-post.dto';
 import ParamsWithId from '../utils/paramsWithId';
-import UpdatePostDto from './dto/update-post.dto';
-import { UpdatePostsDto } from './dto/update-posts.dto';
+import { PatchPostDto } from './dto/patch-post.dto';
 import { TransformPlainToClass } from '@nestjs/class-transformer';
-import { GetPostsDto, PostsDto } from './dto/posts.dto';
+import { PostDto } from './dto/post.dto';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { swaggerConfig } from '../swagger.config';
 
 import { TransformPaginationResponse } from '../common/pagination/transform-pagination-response.decorator';
+import UpdatePostDto from './dto/update-post.dto';
+import { GetPostsDto } from './dto/get-posts.dto';
 
 @ApiTags('Posts')
 @Controller('posts')
@@ -28,23 +29,23 @@ export default class PostsController {
   constructor(private readonly postsService: PostsService) { }
 
   @Get()
-  @TransformPaginationResponse(PostsDto, { excludeExtraneousValues: true })
+  @TransformPaginationResponse(PostDto, { excludeExtraneousValues: true })
   async getAllPosts(@Query() query: GetPostsDto) {
     return this.postsService.findAll(query);
   }
 
   @swaggerConfig.param.id
   @Get(':id')
-  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
+  @TransformPlainToClass(PostDto, { excludeExtraneousValues: true })
   async getPostById(@Param() { id }: ParamsWithId) {
     return this.postsService.findOne(id);
   }
 
   @Post()
-  @ApiBody({ type: CreatePostsDto })
+  @ApiBody({ type: CreatePostDto })
   @ApiBody(swaggerConfig.body)
-  @TransformPlainToClass(PostsDto, { excludeExtraneousValues: true })
-  async createPost(@Body() post: CreatePostsDto) {
+  @TransformPlainToClass(PostDto, { excludeExtraneousValues: true })
+  async createPost(@Body() post: CreatePostDto) {
     return this.postsService.create(post);
   }
 
@@ -57,10 +58,10 @@ export default class PostsController {
   @swaggerConfig.param.id
   @ApiBody(swaggerConfig.body)
   @Put(':id')
-  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
+  @TransformPlainToClass(PostDto, { excludeExtraneousValues: true })
   async updatePost(
     @Param() { id }: ParamsWithId,
-    @Body() post: CreatePostsDto,
+    @Body() post: UpdatePostDto,
   ) {
     return this.postsService.update(id, post);
   }
@@ -68,10 +69,10 @@ export default class PostsController {
   @swaggerConfig.param.id
   @ApiBody(swaggerConfig.body)
   @Patch(':id')
-  @TransformPlainToClass(UpdatePostsDto, { excludeExtraneousValues: true })
+  @TransformPlainToClass(PostDto, { excludeExtraneousValues: true })
   async partialUpdatePost(
     @Param() { id }: ParamsWithId,
-    @Body() post: UpdatePostDto,
+    @Body() post: PatchPostDto,
   ) {
     return this.postsService.partialUpdate(id, post);
   }
